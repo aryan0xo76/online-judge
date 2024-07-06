@@ -5,11 +5,13 @@ const User = require("./models/Users.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
+const cors = require('cors');
 dotenv.config();
 
 //middldewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 //connect to database
 DBConnection();
