@@ -1,8 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./loginPageStyles.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function Login() {
+
+  const [email,setEmail] = useState();
+  const [password,setPassword] = useState();
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:8000/login', {email, password })
+      .then((result) =>  {
+        console.log(result);
+        navigate('/home');
+      })
+      .catch((err) => console.log(err));
+  };
+
+
+
+
   return (
     <div className="all-details">
       <div>
@@ -14,6 +35,7 @@ function Login() {
           className="input-box"
           type="text"
           placeholder="Your email here"
+          onChange={(e)=>setEmail(e.target.value)}
         ></input>
       </div>
       <div>
@@ -22,6 +44,7 @@ function Login() {
           className="input-box"
           type="password"
           placeholder="Your password here"
+          onChange={(e)=>setPassword(e.target.value)}
         ></input>
       </div>
       <div>
@@ -30,7 +53,7 @@ function Login() {
         <a href="/register">
           <button>Register</button>
         </a>
-          <button>Submit</button>
+          <button onClick={handleSubmit}>Submit</button>
         </div>
       </div>
     </div>

@@ -5,7 +5,11 @@ const User = require("./models/Users.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
-const cors = require('cors');
+const cors = require("cors");
+const { generateFilePath } = require("./compilerFiles/generateFilePath.js");
+const { executeCpp } = require("./compilerFiles/executeCpp.js");
+const { generateInputPath } = require("./compilerFiles/generateInputPath.js");
+
 dotenv.config();
 
 //middldewares
@@ -91,6 +95,26 @@ app.post("/login", async (req, res) => {
   const token = jwt.sign({ id: User._id }, process.env.SECRET_KEY, {
     expiresIn: "1h",
   });
+});
+
+app.post("/compiler", async (req, res) => {
+  const language = req.body.language;
+  const code = req.body.code;
+  const input = req.body.input;
+  if (!code) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Enter non-empty code" });
+  }
+  try {
+    const filepath = await generateFilePath(language, code);
+    const inputpath = await generateInputPath(input);
+    const output = await executeCpp(filepath, inputpath);
+    res.json({ output });
+  } catch (err) {
+    console.log(err.error);
+    return res.status(500).json({ success: false, message: "error here" });
+  }
 });
 
 app.listen(8000, () => {
