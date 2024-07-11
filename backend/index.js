@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const { DBConnection } = require("./database/db.js");
 const User = require("./models/Users.js");
+const Problemo = require("./models/ProblemSchema.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
@@ -114,6 +115,113 @@ app.post("/compiler", async (req, res) => {
   } catch (err) {
     console.log(err.error);
     return res.status(500).json({ success: false, message: "error here" });
+  }
+});
+
+app.post("/addproblem", async (req, res) => {
+  try {
+    const {
+      problem_name,
+      problem_description,
+      input_tests,
+      output_tests,
+      hidden_input_tests,
+      hidden_output_tests,
+    } = req.body;
+    if (
+      !(
+        problem_name &&
+        problem_description &&
+        input_tests &&
+        output_tests &&
+        hidden_input_tests &&
+        hidden_output_tests
+      )
+    ) {
+      return res
+        .status(400)
+        .send("Please fill all details before adding the problem");
+    }
+    const existingProblem = await Problemo.findOne({ problem_name });
+    if (existingProblem) {
+      return res
+        .status(400)
+        .send("A problem with the same name already exists");
+    }
+    const problem_curr = await Problemo.create({
+      problem_name,
+      problem_description,
+      input_tests,
+      output_tests,
+      hidden_input_tests,
+      hidden_output_tests,
+    });
+    res.status(201).json({
+      message: "Problem added!",
+      problem_curr,
+    });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ success: false, message: "error when adding problems" });
+  }
+});
+app.post("/deleteproblem", async (req, res) => {
+  try {
+    const { problem_name } = req.body;
+    const existingProblem = await Problemo.findOne({ problem_name });
+    await Problemo.deleteOne({_id: existingProblem });
+    return res.status(201).send({
+      message: "Problem deleted",
+      success: true,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+app.post("/updateproblem", async (req, res) => {
+  try {
+    const {
+      problem_name,
+      problem_description,
+      input_tests,
+      output_tests,
+      hidden_input_tests,
+      hidden_output_tests,
+    } = req.body;
+    if (
+      !(
+        problem_name &&
+        problem_description &&
+        input_tests &&
+        output_tests &&
+        hidden_input_tests &&
+        hidden_output_tests
+      )
+    ) {
+      return res
+        .status(400)
+        .send("Please fill all details before trying to update the problem");
+    }
+    const existingProblem = await Problemo.findOne({problem_name });
+    await Problemo.deleteOne({ _id: existingProblem }); //do _id this because object vs string diff
+
+    const problem_curr = await Problemo.create({
+      problem_name,
+      problem_description,
+      input_tests,
+      output_tests,
+      hidden_input_tests,
+      hidden_output_tests,
+    });
+    return res.status(201).json({
+      message: "Problem has been successfully updated!",
+      problem_curr,
+    });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ success: false, message: "error when updating problems" });
   }
 });
 

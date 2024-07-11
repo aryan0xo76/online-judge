@@ -12,7 +12,9 @@ function Home() {
         <a href="/compiler">
           <button>1&#41; Online Compiler</button>
         </a>
+        <a href="/problems">
         <button>2&#41; Problems</button>
+        </a>
         <button>3&#41; Profile</button>
         <button>4&#41; About the Project</button>
       </div>
