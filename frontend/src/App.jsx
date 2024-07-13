@@ -9,7 +9,8 @@ import Problems from "./assets/problemPageFiles/problemPage.jsx"
 import AddProblem from "./assets/addPageFiles/addPage.jsx"
 import UpdateProblem from "./assets/updatePageFiles/updatePage.jsx"
 import DeleteProblem from "./assets/deletePageFiles/deletePage.jsx"
-import EditProblems from "./assets/editPageFiles/editPage.jsx"
+import Judge from "./assets/judgePageFiles/judgePage.jsx"
+// import EditProblems from "./assets/editPageFilesbad/editPage.jsx"
 
 // import DeleteProblem from "./assets/deletePageFiles/deletePage.jsx"
 // import UpdateProblem from "./assets/updatePageFiles/updatePage.jsx"
@@ -27,10 +28,11 @@ function App() {
         <Route path='/home' element = {<Home/>}></Route>
         <Route path='/compiler' element = {<Compiler/>}></Route>
         <Route path='/problems' element = {<Problems/>}></Route>
-        <Route path='/editproblems' element = {<EditProblems/>}></Route>
+        {/* <Route path='/editproblems' element = {<EditProblems/>}></Route> */}
         <Route path='/addproblem' element = {<AddProblem/>}></Route>   
         <Route path='/updateproblem' element = {<UpdateProblem/>}></Route>     
-        <Route path='/deleteproblem' element = {<DeleteProblem/>}></Route>
+        <Route path='/deleteproblem' element = {<DeleteProblem/>}></Route> 
+        <Route path='/judge' element = {<Judge/>}></Route>
 
       </Routes>
     </BrowserRouter>

@@ -18,7 +18,7 @@
   flex-direction: row;
   scale: 1.2;
   margin-top: 20px;
-  margin-right:6.5px;
+  margin-right: 6.5px;
 }
 .nav-bar-add button {
   font-family: monospace;
@@ -34,4 +34,95 @@
   background-color: rgb(36, 105, 36);
   color: white;
   margin-bottom: 20px;
+}
+.all-test-cases {
+  border: 2px solid;
+  display: flex;
+  flex-direction: column;
+  min-width: 600px;
+  min-height: 300px;
+  max-width: 900px;
+  overflow: scroll;
+  resize: none;
+  max-height: 300px;
+}
+
+.text-box-1 {
+  display: flex;
+  resize: none;
+  flex-direction: column;
+  min-width: 800px;
+}
+.text-box-1 textarea{
+  
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  resize: none;
+
+}
+.text-box-2 textarea {
+  font-family: 'Courier New', Courier, monospace;
+  display: flex;
+  resize: none;
+  flex-direction: row;  
+  min-width: 500px;
+  max-width: 800px;
+  font-weight: bold;
+}
+.add-button {
+  float: right;
+  margin-top: 7px;
+  scale:1.2;
+  /* m */
+  background-color:green;
+  color: white;
+  font-weight: bold;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.delete-button {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  border-radius: 3px;
+  scale: 1.2;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  margin-right: 7px;
+  margin-left:8px;
+}
+.up-button {
+  color: red;
+  scale: 1.1;
+  margin-top: 5px;
+  margin-bottom: 2px;
+  margin-left:20px;
+}
+.down-button {
+  scale: 1.1;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  margin-left:20px;
+}
+.advice{
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
+.all-test-cases {
+  display: flex;
+  flex-direction: row;
+}
+.tcs{
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+.final-button{
+  background-color: rgb(0, 0, 0);
+  color: white;
+  font-weight: bold;
+  border-radius: 3px;
+  scale: 1.5;
+  margin-top: 15px; 
+  margin-bottom: 15px;
 }

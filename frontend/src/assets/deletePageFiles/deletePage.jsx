@@ -1,9 +1,27 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./deletePageStyles.css";
+import axios from "axios";
 
 function DeleteProblem() {
   const [problem_name, setProblem_name] = useState();
+
+  const handleDelete = async () => {
+    const payload={
+      problem_name,
+    };
+    try {
+       const {data} = await axios.post(
+        "http://localhost:8000/deleteproblem",
+        payload
+      )
+      alert("Deleted problem successfully!");
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="all-details-delete">
       <div className="nav-bar-delete">
@@ -26,7 +44,7 @@ function DeleteProblem() {
           <p>Please the enter the Problem you would like to DELETE</p>
           <input onChange={(e) => setProblem_name(e.target.value)}></input>
         </div>
-        <button >DELETE</button>
+        <button onClick={handleDelete}>DELETE</button>
       </div>
     </div>
   );

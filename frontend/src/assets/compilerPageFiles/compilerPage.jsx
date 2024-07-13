@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./compilerPageStyles.css";
 import axios from "axios";
+import Editor from '@monaco-editor/react';   //remember to implement this later
 
 function compilerPage() {
   const defaultCode = `

@@ -1,29 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import "./problemPageStyles.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Problem() {
-  const [problemList, setProblemList] = useState(["hello", "bruh moment"]);
+  const navigate = useNavigate();
+  const [problemList, setProblemList] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/problems")
+      .then((response) => {
+        setProblemList(response.data.response);
+        console.log(response.data.response);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const handleSolve = (index) => {
+    navigate("/judge", { state: {index:{index}} });
+  };
+
   return (
     <div className="all-details-problem">
       <div>
-      <div className="nav-bar">
-        <a href="/problems">
-          <button className="add-problem">Problem List</button>
-        </a>
-        <a href="/addproblem">
-          <button className="add-problem">Add a problem</button>
-        </a>
-        <a href="/updateproblem">
-          <button className="add-problem">Edit a problem</button>
-        </a>
-        <a href="/deleteproblem">
-          <button className="add-problem">Delete a problem</button>
-        </a>
-      </div>
-        <h className="title-problem">
-          Problems List: &#40;Click on problem to attempt!&#41;
-        </h>
+        <div className="nav-bar">
+          <a href="/problems">
+            <button>Problem List</button>
+          </a>
+          <a href="/addproblem">
+            <button>Add a problem</button>
+          </a>
+          <a href="/updateproblem">
+            <button>Edit a problem</button>
+          </a>
+          <a href="/deleteproblem">
+            <button>Delete a problem</button>
+          </a>
+        </div>
+        <h1 className="title-problem">
+          Problems List: &#40;Click on SOLVE to attempt the problem!&#41;
+        </h1>
         <div className="instruction-list">
           <p>
             When adding a problem please make sure to abide by the following
@@ -31,8 +49,8 @@ function Problem() {
           </p>
           <ul>
             <li>
-              Please provide atleast 5 test-cases for strongly checking
-              solutions
+              Please provide 1 sample test-case and 5 hidden test-cases for
+              strongly checking solutions
             </li>
             <li>
               The time and memory limits are [1 sec] and [256 Mb] respectively
@@ -42,7 +60,10 @@ function Problem() {
         <div className="problem-list">
           <ol>
             {problemList.map((problemName, index) => (
-              <li>{problemName}</li>
+              <li key={problemName}>
+                {problemName}
+                <button onClick={() => handleSolve(index)}>SOLVE</button>
+              </li>
             ))}
           </ol>
         </div>

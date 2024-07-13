@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const axios = require("axios");
 const { generateFilePath } = require("./compilerFiles/generateFilePath.js");
 const { executeCpp } = require("./compilerFiles/executeCpp.js");
 const { generateInputPath } = require("./compilerFiles/generateInputPath.js");
@@ -99,9 +100,8 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/compiler", async (req, res) => {
-  const language = req.body.language;
-  const code = req.body.code;
-  const input = req.body.input;
+  const { language = "cpp", code, input } = req.body;
+
   if (!code) {
     return res
       .status(400)
@@ -117,17 +117,41 @@ app.post("/compiler", async (req, res) => {
     return res.status(500).json({ success: false, message: "error here" });
   }
 });
+function trim(str) {
+  return str.replace(/^\s+|\s+$/g, "");
+}
+function replace(str) {
+  return str.replace(/(\r\n|\n|\r)/gm, "");
+}
+app.post("/judge", async (req, res) => {
+  const { language = "cpp", code ,input} = req.body;
+  if (!code) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Enter non-empty code" });
+  }
+  try {
+    const filepath = await generateFilePath(language, code);
+    const inputpath = await generateInputPath(input);
+    const output = await executeCpp(filepath, inputpath);
+    console.log(output);
+    res.json({ response: output });
+  } catch (err) {
+    console.log(err.error);
+    return res.status(500).json({ success: false, message: "error here" });
+  }
+});
 
 app.post("/addproblem", async (req, res) => {
   try {
     const {
       problem_name,
       problem_description,
-      input_tests,
-      output_tests,
       hidden_input_tests,
       hidden_output_tests,
     } = req.body;
+    input_tests = req.body.sample_inputs;
+    output_tests = req.body.sample_outputs;
     if (
       !(
         problem_name &&
@@ -170,7 +194,12 @@ app.post("/deleteproblem", async (req, res) => {
   try {
     const { problem_name } = req.body;
     const existingProblem = await Problemo.findOne({ problem_name });
-    await Problemo.deleteOne({_id: existingProblem });
+    if (!existingProblem) {
+      return res
+        .status(400)
+        .send("The problem you are trying to delete does not exist");
+    }
+    await Problemo.deleteOne({ _id: existingProblem });
     return res.status(201).send({
       message: "Problem deleted",
       success: true,
@@ -184,11 +213,11 @@ app.post("/updateproblem", async (req, res) => {
     const {
       problem_name,
       problem_description,
-      input_tests,
-      output_tests,
       hidden_input_tests,
       hidden_output_tests,
     } = req.body;
+    input_tests = req.body.sample_inputs;
+    output_tests = req.body.sample_outputs;
     if (
       !(
         problem_name &&
@@ -203,7 +232,12 @@ app.post("/updateproblem", async (req, res) => {
         .status(400)
         .send("Please fill all details before trying to update the problem");
     }
-    const existingProblem = await Problemo.findOne({problem_name });
+    const existingProblem = await Problemo.findOne({ problem_name });
+    if (!existingProblem) {
+      return res
+        .status(400)
+        .send("The problem you are trying to edit does not exist!");
+    }
     await Problemo.deleteOne({ _id: existingProblem }); //do _id this because object vs string diff
 
     const problem_curr = await Problemo.create({
@@ -225,6 +259,38 @@ app.post("/updateproblem", async (req, res) => {
   }
 });
 
+app.get("/problems", async (req, res) => {
+  // console.log(problemList);
+  try {
+    const data = await Problemo.find({}, { problem_name: true });
+    const sendData = data.map(({ problem_name }) => problem_name);
+    return res.status(201).send({
+      success: true,
+      message: "problem fetched successfully",
+      response: sendData,
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .send({ success: false, message: "error while getting proble list" });
+  }
+});
+app.get("/judge", async (req, res) => {
+  // console.log(problemList);
+  try {
+    const sendData = await Problemo.find({}, {});
+    console.log(sendData);
+    return res.status(201).send({
+      success: true,
+      message: "problem fetched successfully",
+      response: sendData,
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .send({ success: false, message: "error while getting proble list" });
+  }
+});
 app.listen(8000, () => {
   console.log("Server running on port: 8000");
 });
