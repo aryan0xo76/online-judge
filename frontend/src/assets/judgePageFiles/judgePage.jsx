@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./judgePageStyles.css";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import MonacoEditor, { Editor } from '@monaco-editor/react';   
 function Judge() {
   const { state } = useLocation();
   const { index } = state; // Read values passed on state
@@ -124,12 +125,19 @@ function Judge() {
         </div>
       </div>
       <div className="ci-boxes">
-        <textarea
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          className="code-sinput-soutput"
-          placeholder="Write your code here"
-        ></textarea>
+       
+      <MonacoEditor
+        value={code}
+        onChange={(e) => setCode(e)}
+        className="code-box"
+        height="400px"
+        width="622px"
+        options={{
+          fontSize:17,
+          }}
+        theme="vs-dark"
+        defaultLanguage="cpp"
+        />
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}

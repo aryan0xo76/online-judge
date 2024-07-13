@@ -51,9 +51,10 @@
   justify-content: space-between;
   min-width: 900px;
   min-height: 400px;
+  margin-bottom: 20px;
 }
 .code-box {
-  margin-right: 50px;
+  /* margin-right: 50px; */
   flex: 1;
   resize: none;
   font-size: 17px;
@@ -67,7 +68,6 @@
   /* color: rgb(36, 105, 36); */
 }
 .input-box-compiler {
-  margin-left: 50px;
   flex: 1;
   resize: none;
   font-size: 17px;

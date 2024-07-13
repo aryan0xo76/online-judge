@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./compilerPageStyles.css";
 import axios from "axios";
-import Editor from '@monaco-editor/react';   //remember to implement this later
+import MonacoEditor, { Editor } from '@monaco-editor/react';   //remember to implement this later
 
 function compilerPage() {
   const defaultCode = `
@@ -18,6 +18,7 @@ using namespace std;
   const [output, setOutput] = useState("");
 
   const handleRun = async () => {
+    console.log(code);
     const payload = {
       //good practice to setup payloads
       language: "cpp",
@@ -26,12 +27,12 @@ using namespace std;
     };
 
     try {
-      const { data } = await axios.post(
+      const data = await axios.post(
         "http://localhost:8000/compiler",
         payload
       );
       console.log(data);
-      setOutput(data.output);
+      setOutput(data.data.output);
     } catch (error) {
       console.log(error.response);
     }
@@ -48,12 +49,19 @@ using namespace std;
         </p>
       </div>
       <div className="ci-boxes">
-        <textarea
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          className="code-box"
-          placeholder="Write your code here"
-        ></textarea>
+      
+        <MonacoEditor
+        value={code}
+        onChange={(e) => setCode(e)}
+        className="code-box"
+        height="400px"
+        width="622px"
+        options={{
+          fontSize:17,
+          }}
+        theme="vs-dark"
+        defaultLanguage="cpp"
+        />
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
