@@ -15,6 +15,7 @@ function Judge() {
   const [hidden_ouptut_tests, setHidden_output_tests] = useState([]);
 
   const [verdict, setVerdict] = useState("");
+  const [color,setColor]  = useState("black");
 
   const defaultCode = `
     #include <bits/stdc++.h>
@@ -74,11 +75,12 @@ function Judge() {
 
   const TLE = () => {
     // return console.log("TLE L BOZO");
+     setColor("red");
     return setVerdict("Time Limit Exceeeded!");
   };
 
   const handleJudge = async () => {
-    const timeout = setTimeout(TLE, 20000);
+    const timeout = setTimeout(TLE, 15000);
     const payload = {
       language: "cpp",
       code,
@@ -89,6 +91,7 @@ function Judge() {
     let response = await axios.post("http://localhost:8000/judge", payload);
     if (response.data.response != sample_output_tests) {
       clearTimeout(timeout);
+      setColor("red");
       return setVerdict("Wrong answer on sample test case");
     } else {
       for (let i = 0; i < hidden_input_tests.length; i++) {
@@ -102,10 +105,12 @@ function Judge() {
         //if you reach here then the code has successfully ran without tle so remove "timout"
         if (response.data.response != hidden_ouptut_tests[i]) {
           clearTimeout(timeout);
+          setColor("red");
           return setVerdict(`Wrong answer on hidden test case ${i + 1}`);
         }
       }
-      clearTimeout(timeout);
+      clearTimeout(timeout); 
+      setColor("green");
       return setVerdict("Accepted!");
     }
   };
@@ -117,33 +122,34 @@ function Judge() {
           <h1 value={problem_name}>{problem_name}</h1>
           <p>{problem_description}</p>
         </div>
-        <p>
-          CODE
-          &#8198;&#8198;&#8198;&#8198;&#8198;&#8198;&#8198;&#8198;&#8198;&#8198;&#8198;
-          &#8198;&#8198;&#8198;&#8198;&#8198;&#8198;&#8198;&#8198;&#8198;&#8198;&#8198;
-          &#8198;&#8198;&#8198;&#8198;&#8198; INPUT
-        </p>
       </div>
       <div className="ci-boxes">
         <textarea
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          className="code-box"
+          className="code-sinput-soutput"
           placeholder="Write your code here"
         ></textarea>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="input-box-compiler"
+          className="code-sinput-soutput"
           placeholder="Write your input here"
         ></textarea>
         <textarea
           //   value={sample_output_tests[0]}
           value={sample_output_tests}
-          className="input-box-compiler"
+          className="code-sinput-soutput"
           placeholder="Sample output here"
         ></textarea>
       </div>
+
+      <p className="ci-headings">
+        <span>CODE</span>
+        <span>INPUT</span>
+        <span>SAMPLE OUTPUT</span>
+      </p>
+
       <div>
         <button onClick={handleRun} className="run-button">
           Run
@@ -159,7 +165,7 @@ function Judge() {
       </div>
       <div className="verdict-stuff">
         <button onClick={handleJudge}>SUBMIT</button>
-        <p>Verdict: {verdict}</p>
+        <p value={verdict} style={{color:color}}>Verdict: {verdict}</p>
       </div>
     </div>
   );
