@@ -91,7 +91,7 @@ function Judge() {
     // console.log(payload);
 
     let response = await axios.post("http://localhost:8800/judge", payload);
-    if (response.data.response.trim() != sample_output_tests[0].trim()) {
+    if (response.data.response.trim() != sample_output_tests.trim()) {
       clearTimeout(timeout);
       setColor("red");
       return setVerdict("Wrong answer on sample test case");
