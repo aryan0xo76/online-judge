@@ -26,7 +26,7 @@ app.post("/", async (req, res) => {
       const output = await executeCpp(filepath, inputpath);
       res.json({ output });
     } catch (err) {
-      console.log(err.error);
+      // console.log(err.error);
       return res.status(500).json({ success: false, message: "error here" });
     }
   });
@@ -44,7 +44,7 @@ app.post("/", async (req, res) => {
       const output = await executeCpp(filepath, inputpath);
       res.json({ response: output });
     } catch (err) {
-      console.log(err.error);
+      // console.log(err.error);
       return res.status(500).json({ success: false, message: "error here" });
     }
   });
