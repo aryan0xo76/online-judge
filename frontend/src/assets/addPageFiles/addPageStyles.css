@@ -13,6 +13,8 @@
   border-radius: 50px;
   background: url("../polygon_green.jpg");
 }
+
+
 .nav-bar-add {
   display: flex;
   flex-direction: row;

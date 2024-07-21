@@ -16,7 +16,8 @@ function Home() {
         <button>2&#41; Problems</button>
         </a>
         <button>3&#41; Profile</button>
-        <button>4&#41; About the Project</button>
+        <a href="/about">
+        <button>4&#41; About the Project</button></a>
       </div>
       <div>
         <p className="text">Welcome to NOT Leetcode</p>

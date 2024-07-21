@@ -11,11 +11,11 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     input_tests: {
-      type: [String],
+      type: String,
       required: true,
     },
     output_tests: {
-      type: [String],
+      type: String,
       required: true,
     },
     hidden_input_tests: {

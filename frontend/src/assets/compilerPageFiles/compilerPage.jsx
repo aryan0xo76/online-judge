@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./compilerPageStyles.css";
 import axios from "axios";
-import MonacoEditor, { Editor } from '@monaco-editor/react';   //remember to implement this later
+import MonacoEditor, { Editor } from "@monaco-editor/react";
 
 function compilerPage() {
   const defaultCode = `
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
     int main() {
     cout<<"hello NOT Leetcode! ";
@@ -27,10 +27,7 @@ using namespace std;
     };
 
     try {
-      const data = await axios.post(
-        "http://localhost:8000/compiler",
-        payload
-      );
+      const data = await axios.post("http://localhost:8800", payload);
       console.log(data);
       setOutput(data.data.output);
     } catch (error) {
@@ -49,18 +46,17 @@ using namespace std;
         </p>
       </div>
       <div className="ci-boxes">
-      
         <MonacoEditor
-        value={code}
-        onChange={(e) => setCode(e)}
-        className="code-box"
-        height="400px"
-        width="622px"
-        options={{
-          fontSize:17,
+          value={code}
+          onChange={(e) => setCode(e)}
+          className="code-box"
+          height="400px"
+          width="622px"
+          options={{
+            fontSize: 17,
           }}
-        theme="vs-dark"
-        defaultLanguage="cpp"
+          theme="hc-light"
+          defaultLanguage="cpp"
         />
         <textarea
           value={input}

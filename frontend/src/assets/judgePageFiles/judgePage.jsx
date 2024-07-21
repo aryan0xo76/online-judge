@@ -1,28 +1,27 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom/client";
 import "./judgePageStyles.css";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import MonacoEditor, { Editor } from '@monaco-editor/react';   
+import MonacoEditor, { Editor } from "@monaco-editor/react";
 function Judge() {
   const { state } = useLocation();
-  const { index } = state; // Read values passed on state
+  const { index = "0" } = state; // Read values passed on state
 
   const [problem_name, setProblem_name] = useState();
   const [problem_description, setProblem_description] = useState();
   const [sample_input_tests, setSample_input_tests] = useState();
   const [sample_output_tests, setSample_output_tests] = useState();
   const [hidden_input_tests, setHidden_input_tests] = useState([]);
-  const [hidden_ouptut_tests, setHidden_output_tests] = useState([]);
+  const [hidden_output_tests, setHidden_output_tests] = useState([]);
 
   const [verdict, setVerdict] = useState("");
-  const [color,setColor]  = useState("black");
+  const [color, setColor] = useState("black");
 
   const defaultCode = `
     #include <bits/stdc++.h>
     using namespace std;
         int main() {
-        int a,b;cin>>a>>b;cout<<(a+b);  
+        cout<<"hi";
     
         return 0;
     }`;
@@ -61,13 +60,12 @@ function Judge() {
       code,
       input,
     };
-    console.log(payload);
+    // console.log(payload);
 
     try {
-      const response = await axios.post("http://localhost:8000/judge", payload);
-
-      console.log(response);
-      //   console.log(data);
+      const response = await axios.post("http://localhost:8800/judge", payload);
+      // console.log(sample_output_tests.toString());
+      console.log(response.data.response);
       setOutput(response.data.response);
     } catch (error) {
       console.log(error.response);
@@ -76,7 +74,7 @@ function Judge() {
 
   const TLE = () => {
     // return console.log("TLE L BOZO");
-     setColor("red");
+    setColor("red");
     return setVerdict("Time Limit Exceeeded!");
   };
 
@@ -89,12 +87,13 @@ function Judge() {
     };
     console.log(payload);
 
-    let response = await axios.post("http://localhost:8000/judge", payload);
-    if (response.data.response != sample_output_tests) {
+    let response = await axios.post("http://localhost:8800/judge", payload);
+    if (response.data.response.trim() != sample_output_tests[0].trim()) {
       clearTimeout(timeout);
       setColor("red");
       return setVerdict("Wrong answer on sample test case");
     } else {
+      // if(hidden_input_tests.size()!=0)
       for (let i = 0; i < hidden_input_tests.length; i++) {
         const input = hidden_input_tests[i];
         const payload = {
@@ -102,15 +101,16 @@ function Judge() {
           code,
           input,
         };
-        response = await axios.post("http://localhost:8000/judge", payload);
+        response = await axios.post("http://localhost:8800/judge", payload);
+
         //if you reach here then the code has successfully ran without tle so remove "timout"
-        if (response.data.response != hidden_ouptut_tests[i]) {
+        if (response.data.response.trim() != hidden_output_tests[i].trim()) {
           clearTimeout(timeout);
           setColor("red");
           return setVerdict(`Wrong answer on hidden test case ${i + 1}`);
         }
       }
-      clearTimeout(timeout); 
+      clearTimeout(timeout);
       setColor("green");
       return setVerdict("Accepted!");
     }
@@ -125,18 +125,17 @@ function Judge() {
         </div>
       </div>
       <div className="ci-boxes">
-       
-      <MonacoEditor
-        value={code}
-        onChange={(e) => setCode(e)}
-        className="code-box"
-        height="400px"
-        width="622px"
-        options={{
-          fontSize:17,
+        <MonacoEditor
+          value={code}
+          onChange={(e) => setCode(e)}
+          className="code-box"
+          height="400px"
+          width="622px"
+          options={{
+            fontSize: 17,
           }}
-        theme="vs-dark"
-        defaultLanguage="cpp"
+          theme="hc-light"
+          defaultLanguage="cpp"
         />
         <textarea
           value={input}
@@ -173,7 +172,9 @@ function Judge() {
       </div>
       <div className="verdict-stuff">
         <button onClick={handleJudge}>SUBMIT</button>
-        <p value={verdict} style={{color:color}}>Verdict: {verdict}</p>
+        <p value={verdict} style={{ color: color }}>
+          Verdict: {verdict}
+        </p>
       </div>
     </div>
   );

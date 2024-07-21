@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./problemPageStyles.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AiFillHome  } from "react-icons/ai";
 
 function Problem() {
   const navigate = useNavigate();
@@ -19,13 +20,18 @@ function Problem() {
   }, []);
 
   const handleSolve = (index) => {
-    navigate("/judge", { state: {index:{index}} });
+    navigate("/judge", { state: { index: { index } } });
+  };
+  
+  const handleHome =() =>{
+    navigate("/home");
   };
 
   return (
     <div className="all-details-problem">
       <div>
         <div className="nav-bar">
+          <AiFillHome className="home-button" onClick={handleHome}/>
           <a href="/problems">
             <button>Problem List</button>
           </a>

@@ -43,6 +43,11 @@
   padding-bottom: 5px;
   justify-content: center;
 }
+.home-button{
+  margin-top: 5px;
+  cursor: pointer;
+  scale: 1.5;
+}
 .instruction-list {
   max-width: 900px;
   font-size: 20px;

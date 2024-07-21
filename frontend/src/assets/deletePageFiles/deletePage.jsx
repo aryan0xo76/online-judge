@@ -12,7 +12,7 @@ function DeleteProblem() {
     };
     try {
        const {data} = await axios.post(
-        "http://localhost:8000/deleteproblem",
+        `http://localhost:8000/deleteproblem`,
         payload
       )
       alert("Deleted problem successfully!");

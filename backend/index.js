@@ -7,10 +7,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const axios = require("axios");
-const { generateFilePath } = require("./compilerFiles/generateFilePath.js");
-const { executeCpp } = require("./compilerFiles/executeCpp.js");
-const { generateInputPath } = require("./compilerFiles/generateInputPath.js");
 
 dotenv.config();
 
@@ -99,48 +95,42 @@ app.post("/login", async (req, res) => {
   });
 });
 
-app.post("/compiler", async (req, res) => {
-  const { language = "cpp", code, input } = req.body;
+// app.post("/compiler", async (req, res) => {
+//   const { language = "cpp", code, input } = req.body;
 
-  if (!code) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Enter non-empty code" });
-  }
-  try {
-    const filepath = await generateFilePath(language, code);
-    const inputpath = await generateInputPath(input);
-    const output = await executeCpp(filepath, inputpath);
-    res.json({ output });
-  } catch (err) {
-    console.log(err.error);
-    return res.status(500).json({ success: false, message: "error here" });
-  }
-});
-function trim(str) {
-  return str.replace(/^\s+|\s+$/g, "");
-}
-function replace(str) {
-  return str.replace(/(\r\n|\n|\r)/gm, "");
-}
-app.post("/judge", async (req, res) => {
-  const { language = "cpp", code ,input} = req.body;
-  if (!code) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Enter non-empty code" });
-  }
-  try {
-    const filepath = await generateFilePath(language, code);
-    const inputpath = await generateInputPath(input);
-    const output = await executeCpp(filepath, inputpath);
-    console.log(output);
-    res.json({ response: output });
-  } catch (err) {
-    console.log(err.error);
-    return res.status(500).json({ success: false, message: "error here" });
-  }
-});
+//   if (!code) {
+//     return res
+//       .status(400)
+//       .json({ success: false, message: "Enter non-empty code" });
+//   }
+//   try {
+//     const filepath = await generateFilePath(language, code);
+//     const inputpath = await generateInputPath(input);
+//     const output = await executeCpp(filepath, inputpath);
+//     res.json({ output });
+//   } catch (err) {
+//     console.log(err.error);
+//     return res.status(500).json({ success: false, message: "error here" });
+//   }
+// });
+// app.post("/judge", async (req, res) => {
+//   const { language = "cpp", code ,input} = req.body;
+  
+//   if (!code) {
+//     return res
+//       .status(400)
+//       .json({ success: false, message: "Enter non-empty code" });
+//   }
+//   try {
+//     const filepath = await generateFilePath(language, code);
+//     const inputpath = await generateInputPath(input);
+//     const output = await executeCpp(filepath, inputpath);
+//     res.json({ response: output });
+//   } catch (err) {
+//     console.log(err.error);
+//     return res.status(500).json({ success: false, message: "error here" });
+//   }
+// });
 
 app.post("/addproblem", async (req, res) => {
   try {
@@ -291,6 +281,7 @@ app.get("/judge", async (req, res) => {
       .send({ success: false, message: "error while getting proble list" });
   }
 });
-app.listen(8000, () => {
-  console.log("Server running on port: 8000");
+
+app.listen(process.env.port, () => {
+  console.log(`Server running on port: ${process.env.port}`);
 });
