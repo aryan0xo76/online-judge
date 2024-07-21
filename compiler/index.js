@@ -50,6 +50,6 @@ app.post("/", async (req, res) => {
   });
 
   app.listen(process.env.port, () => { //to run compiler on free port in case 8800 is being used by some other service
-    console.log("Server running on port: 8800");
+    console.log(`Server running on port: ${process.env.port}`);
   });
   

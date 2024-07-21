@@ -18,7 +18,7 @@ using namespace std;
   const [output, setOutput] = useState("");
 
   const handleRun = async () => {
-    console.log(code);
+    // console.log(code);
     const payload = {
       //good practice to setup payloads
       language: "cpp",
@@ -28,10 +28,10 @@ using namespace std;
 
     try {
       const data = await axios.post("http://localhost:8800", payload);
-      console.log(data);
+      // console.log(data);
       setOutput(data.data.output);
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
     }
   };
 

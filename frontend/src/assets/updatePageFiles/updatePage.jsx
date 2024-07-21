@@ -77,7 +77,7 @@ function UpdateProblem() {
     setInput_tests([]);
     setOutput_tests([]);
 
-    console.log(payload);
+    // console.log(payload);
 
     try {
       const {data} = await axios.post(
@@ -85,7 +85,7 @@ function UpdateProblem() {
         `${import.meta.env.VITE_BACKEND_URL}/updateproblems`,
         payload,
       );
-      console.log(data);
+      // console.log(data);
       alert("Updated problem successfully!");
     } catch (error) {
       console.log(error.response);

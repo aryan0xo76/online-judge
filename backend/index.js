@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Online Judge");
 });
 app.post("/register", async (req, res) => {
-  console.log(req);
+  // console.log(req);
   try {
     const { firstname, lastname, email, password } = req.body;
     //check if all the details have been filled by the user
@@ -269,7 +269,7 @@ app.get("/judge", async (req, res) => {
   // console.log(problemList);
   try {
     const sendData = await Problemo.find({}, {});
-    console.log(sendData);
+    // console.log(sendData);
     return res.status(201).send({
       success: true,
       message: "problem fetched successfully",

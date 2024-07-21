@@ -15,7 +15,7 @@ function Problem() {
         `${import.meta.env.VITE_BACKEND_URL}/problems`)
       .then((response) => {
         setProblemList(response.data.response);
-        console.log(response.data.response);
+        // console.log(response.data.response);
       })
       .catch((err) => console.log(err));
   }, []);

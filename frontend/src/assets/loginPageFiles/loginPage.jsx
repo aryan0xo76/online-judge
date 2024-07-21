@@ -16,7 +16,7 @@ function Login() {
     axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/login`, {email, password })
       .then((result) =>  {
-        console.log(result);
+        // console.log(result);
         navigate('/home');
       })
       .catch((err) => console.log(err));

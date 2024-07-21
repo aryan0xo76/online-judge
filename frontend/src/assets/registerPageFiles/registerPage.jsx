@@ -16,7 +16,7 @@ function Register() {
     axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/register`, { firstname, lastname, email, password })
       .then((result) =>  {
-        console.log(result);
+        // console.log(result);
         navigate('/home');
       })
       .catch((err) => console.log(err));
