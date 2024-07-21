@@ -1,8 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
 import "./aboutPageStyles.css";
 
-function About() {
+export function About() {
   return (
     <div className="all-details-about">
       <div>
@@ -27,5 +26,3 @@ function About() {
     </div>
   );
 }
-
-export default About;
