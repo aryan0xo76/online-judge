@@ -262,7 +262,7 @@ app.get("/problems", async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .send({ success: false, message: "error while getting proble list" });
+      .send({ success: false, message: "error while getting problem list" });
   }
 });
 app.get("/judge", async (req, res) => {
