@@ -12,7 +12,8 @@ function DeleteProblem() {
     };
     try {
        const {data} = await axios.post(
-        `http://localhost:8000/deleteproblem`,
+        
+        `${import.meta.env.VITE_BACKEND_URL}/deleteproblem`,
         payload
       )
       alert("Deleted problem successfully!");

@@ -13,7 +13,8 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8000/register', { firstname, lastname, email, password })
+    axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/register`, { firstname, lastname, email, password })
       .then((result) =>  {
         console.log(result);
         navigate('/home');

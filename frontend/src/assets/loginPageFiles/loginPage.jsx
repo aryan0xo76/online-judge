@@ -13,7 +13,8 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8000/login', {email, password })
+    axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/login`, {email, password })
       .then((result) =>  {
         console.log(result);
         navigate('/home');

@@ -11,7 +11,8 @@ function Problem() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/problems")
+      .get(
+        `${import.meta.env.VITE_BACKEND_URL}/problems`)
       .then((response) => {
         setProblemList(response.data.response);
         console.log(response.data.response);
