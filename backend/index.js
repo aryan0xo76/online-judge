@@ -266,11 +266,13 @@ app.get("/problems", async (req, res) => {
   }
 });
 app.get("/judge", async (req, res) => {
-  // console.log(problemList);
   try {
+    
+  // console.log(problemList);
     const sendData = await Problemo.find({}, {});
-    // console.log(sendData);
-    return res.status(201).send({
+    // console.log("pencho");
+        console.log(sendData);
+    return res.status(201).senda({
       success: true,
       message: "problem fetched successfully",
       response: sendData,

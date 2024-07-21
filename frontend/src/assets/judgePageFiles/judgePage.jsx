@@ -29,11 +29,14 @@ function Judge() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   //   response.data.response[index.index]
+  // console.log();
+  
   useEffect(() => {
     axios
-      .get(
-        `${import.meta.env.VITE_BACKEND_URL}/judge`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/judge`)
       .then((response) => {
+        console.log(
+          response.data.response[index.index].output_tests);
         setProblem_name(response.data.response[index.index].problem_name);
         setProblem_description(
           response.data.response[index.index].problem_description
@@ -66,7 +69,7 @@ function Judge() {
     try {
       const response = await axios.post("http://localhost:8800/judge", payload);
       // console.log(sample_output_tests.toString());
-      // console.log(response.data.response);
+      console.log(response.data.response);
       setOutput(response.data.response);
     } catch (error) {
       // console.log(error.response);
@@ -89,7 +92,7 @@ function Judge() {
     // console.log(payload);
 
     let response = await axios.post("http://localhost:8800/judge", payload);
-    if (response.data.response.trim() != sample_output_tests[0].trim()) {
+    if (response.data.response.trim() != sample_output_tests.trim()) {
       clearTimeout(timeout);
       setColor("red");
       return setVerdict("Wrong answer on sample test case");
