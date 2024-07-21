@@ -35,8 +35,7 @@ function Judge() {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/judge`)
       .then((response) => {
-        console.log(
-          response.data.response[index.index].output_tests);
+        console.log(response);
         setProblem_name(response.data.response[index.index].problem_name);
         setProblem_description(
           response.data.response[index.index].problem_description
@@ -92,7 +91,7 @@ function Judge() {
     // console.log(payload);
 
     let response = await axios.post("http://localhost:8800/judge", payload);
-    if (response.data.response.trim() != sample_output_tests.trim()) {
+    if (response.data.response.trim() != sample_output_tests[0].trim()) {
       clearTimeout(timeout);
       setColor("red");
       return setVerdict("Wrong answer on sample test case");

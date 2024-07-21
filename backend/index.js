@@ -270,9 +270,8 @@ app.get("/judge", async (req, res) => {
     
   // console.log(problemList);
     const sendData = await Problemo.find({}, {});
-    // console.log("pencho");
-        console.log(sendData);
-    return res.status(201).senda({
+        // console.log(sendData);
+    return res.status(201).send({
       success: true,
       message: "problem fetched successfully",
       response: sendData,
@@ -280,7 +279,7 @@ app.get("/judge", async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .send({ success: false, message: "error while getting proble list" });
+      .send({ success: false, message: "error while getting problem list" });
   }
 });
 
