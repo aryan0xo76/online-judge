@@ -74,7 +74,7 @@ app.post("/login", async (req, res) => {
     //check for correct password
     bcrypt.compare(password, userCheck.password, function (berr, bres) {
       if (berr) {
-        console.log(berr);
+        // console.log(berr);
       }
       if (bres) {
         return res.status(201).send("You are logged in!");
@@ -87,7 +87,7 @@ app.post("/login", async (req, res) => {
       }
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
   //generate jwt token for accessing pages(expires in 1h)
   const token = jwt.sign({ id: User._id }, process.env.SECRET_KEY, {

@@ -76,17 +76,17 @@ function EditProblems() {
     setInput_tests([]);
     setOutput_tests([]);
 
-    console.log(payload);
+    // console.log(payload);
 
     try {
       const { data } = await axios.post(
         "http://localhost:8000/addproblem",
         payload
       );
-      console.log(data);
+      // console.log(data);
       alert("Added problem successfully!");
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
     }
   };
 
