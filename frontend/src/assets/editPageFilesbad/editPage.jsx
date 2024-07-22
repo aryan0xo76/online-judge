@@ -80,7 +80,7 @@ function EditProblems() {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/addproblem",
+        `${import.meta.env.VITE_BACKEND_URL}/addproblem`,
         payload
       );
       // console.log(data);
