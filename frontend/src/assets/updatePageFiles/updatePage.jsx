@@ -82,7 +82,7 @@ function UpdateProblem() {
     try {
       const {data} = await axios.post(
         
-        `${import.meta.env.VITE_BACKEND_URL}/updateproblems`,
+        `${import.meta.env.VITE_BACKEND_URL}/updateproblem`,
         payload,
       );
       // console.log(data);
