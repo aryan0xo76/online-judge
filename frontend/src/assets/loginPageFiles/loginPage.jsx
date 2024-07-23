@@ -3,21 +3,22 @@ import ReactDOM from "react-dom/client";
 import "./loginPageStyles.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 
 function Login() {
-
-  const [email,setEmail] = useState();
-  const [password,setPassword] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/login`, {email, password })
-      .then((result) =>  {
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/login`, { email, password })
+      .then((result) => {
         // console.log(result);
-        navigate('/home');
+        localStorage.setItem("login", true);
+        // setLoginCheck(1);
+        navigate("/home");
       })
       .catch((err) => console.log(err));
   };
@@ -33,7 +34,7 @@ function Login() {
           className="input-box"
           type="text"
           placeholder="Your email here"
-          onChange={(e)=>setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         ></input>
       </div>
       <div>
@@ -42,15 +43,15 @@ function Login() {
           className="input-box"
           type="password"
           placeholder="Your password here"
-          onChange={(e)=>setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         ></input>
       </div>
       <div>
         <div className="make-account">Make an account?</div>
         <div className="lsButtons">
-        <a href="/register">
-          <button>Register</button>
-        </a>
+          <a href="/register">
+            <button>Register</button>
+          </a>
           <button onClick={handleSubmit}>Submit</button>
         </div>
       </div>

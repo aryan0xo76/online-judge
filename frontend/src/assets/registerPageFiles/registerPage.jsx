@@ -17,6 +17,8 @@ function Register() {
       `${import.meta.env.VITE_BACKEND_URL}/register`, { firstname, lastname, email, password })
       .then((result) =>  {
         // console.log(result);
+        
+        localStorage.setItem("login", true);
         navigate('/home');
       })
       .catch((err) => console.log(err));

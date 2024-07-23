@@ -13,7 +13,8 @@ dotenv.config();
 //middldewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors())
+
 
 //connect to database
 DBConnection();
@@ -70,11 +71,12 @@ app.post("/login", async (req, res) => {
     if (userCheck == undefined) {
       return res.status(400).send("This email has not been registered");
     }
+    
 
     //check for correct password
     bcrypt.compare(password, userCheck.password, function (berr, bres) {
       if (berr) {
-        // console.log(berr);
+        console.log(berr);
       }
       if (bres) {
         return res.status(201).send("You are logged in!");
