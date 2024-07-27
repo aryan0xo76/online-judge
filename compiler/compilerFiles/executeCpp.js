@@ -15,7 +15,7 @@ const executeCpp = (filePath,inputPath) => {
   console.log(filePath);
  
   const uniqueID = path.basename(filePath).split(".")[0];
-  const executableName = `${uniqueID}.out`; ///xyz.exe
+  const executableName = `${uniqueID}.exe`; ///xyz.exe
   const outPath = path.join(outputPath, executableName); // outputs/xyz.exe
 
     // console.log(filePath);
@@ -25,7 +25,7 @@ const executeCpp = (filePath,inputPath) => {
 
   return new Promise((resolve, reject) => {
     exec(
-      `g++ ${filePath} -o ${outPath} && cd ${outputPath} && ./${executableName} < ${inputPath}`,
+      `g++ ${filePath} -o ${outPath} && cd ${outputPath} && .\\${executableName} < ${inputPath}`,
       (error, stdout, stderr) => {
         if (error) {
           reject({ error, stderr });

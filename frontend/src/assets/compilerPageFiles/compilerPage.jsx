@@ -5,38 +5,61 @@ import axios from "axios";
 import MonacoEditor, { Editor } from "@monaco-editor/react";
 
 function compilerPage() {
-  const defaultCode = `
+  const defaultCodeCpp = `
 #include <bits/stdc++.h>
 using namespace std;
     int main() {
-    cout<<"hello NOT Leetcode! ";
+    cout<<"hello NOT Leetcode!";
 
     return 0;
 }`;
-  const [code, setCode] = useState(defaultCode);
+  const defaultCodeJava = `
+import java.util.*;
+class HelloWorld {
+    public static void main(String[] args) {
+        System.out.print("hello NOT Leetcode in java!");
+    }
+}`;
+  const [language, setLanguage] = useState("cpp");
+  const [code, setCode] = useState(defaultCodeCpp);
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
 
+  const handleLanguage = (e) => {
+    setLanguage(e.target.value);
+    if (e.target.value == "cpp") {
+      setCode(defaultCodeCpp);
+    } else if (e.target.value == "java") {
+      setCode(defaultCodeJava);
+    }
+  };
   const handleRun = async () => {
-    // console.log(code);
+    console.log(code);
+    console.log(input);
+    console.log(language);
     const payload = {
       //good practice to setup payloads
-      language: "cpp",
+      language,
       code,
       input,
     };
 
     try {
       const data = await axios.post("http://localhost:8800", payload);
-      // console.log(data);
+      console.log(data);
       setOutput(data.data.output);
     } catch (error) {
-      // console.log(error.response);
+      console.log(error.valueq);
     }
   };
-
   return (
     <div className="all-details-compiler">
+      <div>
+        <select onChange={(e) => handleLanguage(e)}>
+          <option value="cpp">C++</option>
+          <option value="java">Java</option>
+        </select>
+      </div>
       <div className="title-1">
         <p>
           CODE
@@ -66,7 +89,7 @@ using namespace std;
         ></textarea>
       </div>
       <div>
-        <button onClick={handleRun} className="run-button">
+        <button onClick={handleRun} className="run-button-comp">
           Run
         </button>
       </div>

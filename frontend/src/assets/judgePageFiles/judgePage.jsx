@@ -17,20 +17,28 @@ function Judge() {
   const [verdict, setVerdict] = useState("");
   const [color, setColor] = useState("black");
 
-  const defaultCode = `
-    #include <bits/stdc++.h>
-    using namespace std;
-        int main() {
-        cout<<"hi";
-    
-        return 0;
-    }`;
-  const [code, setCode] = useState(defaultCode);
+  const defaultCodeCpp = `
+  #include <bits/stdc++.h>
+  using namespace std;
+      int main() {
+      cout<<"hello NOT Leetcode!";
+  
+      return 0;
+  }`;
+  const defaultCodeJava = `
+  import java.util.*;
+  class HelloWorld {
+      public static void main(String[] args) {
+          System.out.print("hello NOT Leetcode in java!");
+      }
+  }`;
+  const [language, setLanguage] = useState("cpp");
+  const [code, setCode] = useState(defaultCodeCpp);
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   //   response.data.response[index.index]
   // console.log();
-  
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/judge`)
@@ -59,7 +67,7 @@ function Judge() {
   const handleRun = async () => {
     const payload = {
       //good practice to setup payloads
-      language: "cpp",
+      language,
       code,
       input,
     };
@@ -84,7 +92,7 @@ function Judge() {
   const handleJudge = async () => {
     const timeout = setTimeout(TLE, 15000);
     const payload = {
-      language: "cpp",
+      language,
       code,
       input,
     };
@@ -100,7 +108,7 @@ function Judge() {
       for (let i = 0; i < hidden_input_tests.length; i++) {
         const input = hidden_input_tests[i];
         const payload = {
-          language: "cpp",
+          language,
           code,
           input,
         };
@@ -118,9 +126,19 @@ function Judge() {
       return setVerdict("Accepted!");
     }
   };
+  const handleLanguage = (e) => {
+    // console.log(1);
+    setLanguage(e.target.value);
+    if (e.target.value == "cpp") {
+      setCode(defaultCodeCpp);
+    } else if (e.target.value == "java") {
+      setCode(defaultCodeJava);
+    }
+  };
 
   return (
     <div className="all-details-compiler">
+     
       <div className="title-1">
         <div className="problem-details">
           <h1 value={problem_name}>{problem_name}</h1>
@@ -135,7 +153,7 @@ function Judge() {
           height="400px"
           width="622px"
           options={{
-            fontSize: 17,
+            fontSize: 20,
           }}
           theme="hc-light"
           defaultLanguage="cpp"
@@ -156,7 +174,7 @@ function Judge() {
 
       <p className="ci-headings">
         <span>CODE</span>
-        <span>INPUT</span>
+        <span>SAMPLE INPUT</span>
         <span>SAMPLE OUTPUT</span>
       </p>
 
@@ -164,6 +182,11 @@ function Judge() {
         <button onClick={handleRun} className="run-button">
           Run
         </button>
+        <select className="languages" onChange={(e) => handleLanguage(e)}>
+          <option value="cpp">C++</option>
+          <option value="java">Java</option>
+        </select>
+
       </div>
       <div>
         <p className="title-2">OUTPUT</p>
