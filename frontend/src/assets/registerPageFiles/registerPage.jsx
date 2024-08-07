@@ -23,7 +23,7 @@ function Register() {
         password,
       })
       .then((result) => {
-        if (result.data == "You have successfully registered") {
+        if (result.data.messsage == "You have successfully registered") {
           toast.success("You have successfully registered");
           setTimeout(() => {
             localStorage.setItem("login", true);

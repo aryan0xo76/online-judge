@@ -27,12 +27,18 @@ app.post("/register", async (req, res) => {
     const { firstname, lastname, email, password } = req.body;
     //check if all the details have been filled by the user
     if (!(firstname && lastname && email && password)) {
-      return res.status(400).send("Please fill all the details");
+      return res.status(400).send({
+        success:true,
+        message: "Please fill in all details",
+      });
     }
     //check if email has already been used
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).send("User already exists");
+      return res.status(400).send({
+        success:true,
+        message: "User already exists",
+      });
     }
     // encrypt password
     const hashPassword = bcrypt.hashSync(password, 10);
@@ -49,6 +55,7 @@ app.post("/register", async (req, res) => {
     user.token = token;
     user.password = undefined;
     res.status(201).json({
+      success:true,
       message: "You have successfully registered",
       user,
     });
