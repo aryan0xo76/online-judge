@@ -23,8 +23,9 @@ function Register() {
         password,
       })
       .then((result) => {
-        if (result.data.messsage == "You have successfully registered") {
-          toast.success("You have successfully registered");
+        console.log(result);
+        if (result.data.messsage == 'You have successfully registered') {
+          toast.success("You have successfully registered!");
           setTimeout(() => {
             localStorage.setItem("login", true);
             navigate("/home");

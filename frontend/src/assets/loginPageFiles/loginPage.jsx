@@ -17,7 +17,6 @@ function Login() {
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/login`, { email, password })
       .then((result) => {
-        console.log(result);
         if (result.data.message == "You are logged in!") {
           toast.success("Logging in!");
           setTimeout(() => {
@@ -25,12 +24,11 @@ function Login() {
             if (email == "admin") {
               localStorage.setItem("admin", true);
             }
-            navigate("/home");
+            navigate("/login");
           }, 1000);
         }
       })
       .catch((err) => {
-          console.log(result.response);
         const toastMessage = err.response.data.message;
         toast.error(toastMessage);
       });
