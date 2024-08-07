@@ -28,7 +28,7 @@ app.post("/register", async (req, res) => {
     //check if all the details have been filled by the user
     if (!(firstname && lastname && email && password)) {
       return res.status(400).send({
-        success:true,
+        success: true,
         message: "Please fill in all details",
       });
     }
@@ -36,7 +36,7 @@ app.post("/register", async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).send({
-        success:true,
+        success: true,
         message: "User already exists",
       });
     }
@@ -55,7 +55,7 @@ app.post("/register", async (req, res) => {
     user.token = token;
     user.password = undefined;
     res.status(201).json({
-      success:true,
+      success: true,
       message: "You have successfully registered",
       user,
     });
@@ -68,12 +68,10 @@ app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!(email && password)) {
-      return res
-        .status(400)
-        .send({
-          success: true,
-          message: "Please fill the email and password credentials",
-        });
+      return res.status(400).send({
+        success: true,
+        message: "Please fill the email and password credentials",
+      });
     }
 
     const userCheck = await User.findOne({ email }); // findOne returns user(from document) according to property:email
@@ -170,13 +168,13 @@ app.post("/addproblem", async (req, res) => {
     ) {
       return res
         .status(400)
-        .send("Please fill all details before adding the problem");
+        .send({ message: "Please fill all details before adding the problem" });
     }
     const existingProblem = await Problemo.findOne({ problem_name });
     if (existingProblem) {
       return res
         .status(400)
-        .send("A problem with the same name already exists");
+        .send({ message: "A problem with the same name already exists" });
     }
     const problem_curr = await Problemo.create({
       problem_name,
@@ -203,7 +201,9 @@ app.post("/deleteproblem", async (req, res) => {
     if (!existingProblem) {
       return res
         .status(400)
-        .send("The problem you are trying to delete does not exist");
+        .send({
+          message: "The problem you are trying to delete does not exist",
+        });
     }
     await Problemo.deleteOne({ _id: existingProblem });
     return res.status(201).send({
@@ -236,13 +236,18 @@ app.post("/updateproblem", async (req, res) => {
     ) {
       return res
         .status(400)
-        .send("Please fill all details before trying to update the problem");
+        .send({
+          message:
+            "Please fill all details before trying to update the problem",
+        });
     }
     const existingProblem = await Problemo.findOne({ problem_name });
     if (!existingProblem) {
       return res
         .status(400)
-        .send("The problem you are trying to edit does not exist!");
+        .send({
+          message: "The problem you are trying to edit does not exist!",
+        });
     }
     await Problemo.deleteOne({ _id: existingProblem }); //do _id this because object vs string diff
 

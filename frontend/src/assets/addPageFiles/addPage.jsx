@@ -4,6 +4,8 @@ import "./addPageStyles.css";
 import axios from "axios";
 import { AiFillHome } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // {(() => { // immediately invoked fucntionexpression (IIFE) [very helpful]
 //   if (hidden_input_tests.length == 0) {
@@ -96,9 +98,10 @@ function AddProblem() {
         payload
       );
       // console.log(data);
-      alert("Added problem successfully!");
+      toast.success("Added problem successfully!");
     } catch (error) {
-      // console.log(error.response);
+      const toastMessage = error.response.data.message;
+      toast.error(toastMessage);
     }
   };
   const handleHome = () => {
@@ -106,94 +109,115 @@ function AddProblem() {
   };
 
   return (
-    <div className="photo">
-      <div className="all-details-add">
-        <div className="nav-bar-add">
-          <AiFillHome className="home-button" onClick={handleHome} />
-          <a href="/problems">
-            <button>Problem List</button>
-          </a>
-          <a href="/addproblem">
-            <button>Add a problem</button>
-          </a>
-          <a href="/updateproblem">
-            <button>Edit a problem</button>
-          </a>
-          <a href="/deleteproblem">
-            <button>Delete a problem</button>
-          </a>
-        </div>
-        <div className="text-box-1">
-          <textarea
-            value={problem_name}
-            onChange={(e) => setProblem_name(e.target.value)}
-            placeholder="Write the problem name here"
-          ></textarea>
-          <textarea
-            value={problem_description}
-            onChange={(e) => setProblem_description(e.target.value)}
-            placeholder="Write the problem description here"
-          ></textarea>
-        </div>
-        <p className="advice">
-          [Test case #1 will be treated as the sample test case and the rest
-          will be hidden test cases]
-        </p>
-        <p className="advice">(add atleast 1 hidden test case)</p>
-        <div className="text-box-2">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Write input of test case"
-          ></textarea>
-          <textarea
-            value={output}
-            onChange={(e) => setOutput(e.target.value)}
-            placeholder="Write output of test case"
-          ></textarea>
-          <span>
-            <button className="add-button" onClick={handleAdd}>
-              Add test case
-            </button>
-          </span>
-        </div>
-        <div className="all-test-cases">
-          <ol>
-            {input_tests.map((it, index) => (
-              <li key={index}>
-                <div>
-                  <span className="tcs">
-                    TC:{index + 1} &#8198;INPUT: &#8198; {input_tests[index]}
-                  </span>
-                  <br></br>
-                  <span className="tcs">
-                    TC:{index + 1} &#8198;OUTPUT: &#8198;{output_tests[index]}
-                  </span>
-                  <br></br>
+    <div>
+      <div>
+        <ToastContainer
+          position="top-right"
+          autoClose={1000}
+          limit={1}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          transition:Bounce
+        />
+      </div>
+      <div className="photo">
+        <div className="all-details-add">
+          <div className="nav-bar-add">
+            <AiFillHome className="home-button" onClick={handleHome} />
+            <a href="/problems">
+              <button>Problem List</button>
+            </a>
+            <a href="/addproblem">
+              <button>Add a problem</button>
+            </a>
+            <a href="/updateproblem">
+              <button>Edit a problem</button>
+            </a>
+            <a href="/deleteproblem">
+              <button>Delete a problem</button>
+            </a>
+          </div>
+          <div className="text-box-1">
+            <textarea
+              value={problem_name}
+              onChange={(e) => setProblem_name(e.target.value)}
+              placeholder="Write the problem name here"
+            ></textarea>
+            <textarea
+              value={problem_description}
+              onChange={(e) => setProblem_description(e.target.value)}
+              placeholder="Write the problem description here"
+            ></textarea>
+          </div>
+          <p className="advice">
+            [Test case #1 will be treated as the sample test case and the rest
+            will be hidden test cases]
+          </p>
+          <p className="advice">(add atleast 1 hidden test case)</p>
+          <div className="text-box-2">
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Write input of test case"
+            ></textarea>
+            <textarea
+              value={output}
+              onChange={(e) => setOutput(e.target.value)}
+              placeholder="Write output of test case"
+            ></textarea>
+            <span>
+              <button className="add-button" onClick={handleAdd}>
+                Add test case
+              </button>
+            </span>
+          </div>
+          <div className="all-test-cases">
+            <ol>
+              {input_tests.map((it, index) => (
+                <li key={index}>
+                  <div>
+                    <span className="tcs">
+                      TC:{index + 1} &#8198;INPUT: &#8198; {input_tests[index]}
+                    </span>
+                    <br></br>
+                    <span className="tcs">
+                      TC:{index + 1} &#8198;OUTPUT: &#8198;{output_tests[index]}
+                    </span>
+                    <br></br>
 
-                  <button
-                    className="delete-button"
-                    onClick={() => handleDelete(index)}
-                  >
-                    Delete
-                  </button>
-                  <button className="up-button" onClick={() => handleUp(index)}>
-                    ⬆️
-                  </button>
-                  <button
-                    className="down-button"
-                    onClick={() => handleDown(index)}
-                  >
-                    ⬇️
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ol>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(index)}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="up-button"
+                      onClick={() => handleUp(index)}
+                    >
+                      ⬆️
+                    </button>
+                    <button
+                      className="down-button"
+                      onClick={() => handleDown(index)}
+                    >
+                      ⬇️
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <button onClick={handleFinalAdd} className="final-button">
+            ADD PROBLEM
+          </button>
         </div>
-        <button onClick={handleFinalAdd} className="final-button">
-          ADD PROBLEM
-        </button>
       </div>
     </div>
   );
