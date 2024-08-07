@@ -22,14 +22,14 @@ function Register() {
         email,
         password,
       })
-      .then((result) => {
-        if (result.data.messsage == "You have successfully registered") {
-          console.log(result.data.message);
+      .then((response) => {
+        console.log(response);
+        if (response.data.success == true) {
           toast.success("You have successfully registered!");
           setTimeout(() => {
             localStorage.setItem("login", true);
             navigate("/home");
-          }, 1000);
+          }, 1500);
         }
       })
       .catch((err) => {
