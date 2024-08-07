@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./deletePageStyles.css";
+import { AiFillHome } from "react-icons/ai";
 import axios from "axios";
 
 function DeleteProblem() {
@@ -22,10 +23,15 @@ function DeleteProblem() {
       console.log(error);
     }
   };
+  const handleHome = () => {
+    navigate("/home");
+  };
+
 
   return (
     <div className="all-details-delete">
       <div className="nav-bar-delete">
+      <AiFillHome className="home-button" onClick={handleHome} />
         <a href="/problems">
           <button>Problem List</button>
         </a>

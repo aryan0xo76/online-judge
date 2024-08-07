@@ -14,7 +14,7 @@ function About() {
         <ul>
           <li>Complete authentication of user including login and register</li>
           <li>
-            A working compiler supporting the language C++. (more to
+            A working compiler supporting the languages C++ and Java. (more to
             be added)
           </li>
           <li>CRUD ops to add, edit, delete problems in a problem set.</li>

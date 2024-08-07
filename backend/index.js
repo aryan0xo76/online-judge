@@ -13,8 +13,7 @@ dotenv.config();
 //middldewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors())
-
+app.use(cors());
 
 //connect to database
 DBConnection();
@@ -64,14 +63,19 @@ app.post("/login", async (req, res) => {
     if (!(email && password)) {
       return res
         .status(400)
-        .send("Please fill the email and password credentials");
+        .send({
+          success: true,
+          message: "Please fill the email and password credentials",
+        });
     }
 
     const userCheck = await User.findOne({ email }); // findOne returns user(from document) according to property:email
     if (userCheck == undefined) {
-      return res.status(400).send("This email has not been registered");
+      return res.status(400).send({
+        success: true,
+        message: "This email has not been registered",
+      });
     }
-    
 
     //check for correct password
     bcrypt.compare(password, userCheck.password, function (berr, bres) {
@@ -79,7 +83,10 @@ app.post("/login", async (req, res) => {
         console.log(berr);
       }
       if (bres) {
-        return res.status(201).send("You are logged in!");
+        return res.status(201).send({
+          success: true,
+          message: "You are logged in!",
+        });
       } else {
         // response is OutgoingMessage object that server response http request
         return res.status(400).json({
@@ -117,7 +124,7 @@ app.post("/login", async (req, res) => {
 // });
 // app.post("/judge", async (req, res) => {
 //   const { language = "cpp", code ,input} = req.body;
-  
+
 //   if (!code) {
 //     return res
 //       .status(400)
@@ -269,10 +276,9 @@ app.get("/problems", async (req, res) => {
 });
 app.get("/judge", async (req, res) => {
   try {
-    
-  // console.log(problemList);
+    // console.log(problemList);
     const sendData = await Problemo.find({}, {});
-        // console.log(sendData);
+    // console.log(sendData);
     return res.status(201).send({
       success: true,
       message: "problem fetched successfully",

@@ -3,6 +3,9 @@ import "./judgePageStyles.css";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import MonacoEditor, { Editor } from "@monaco-editor/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function Judge() {
   const { state } = useLocation();
   const { index = "0" } = state; // Read values passed on state
@@ -84,9 +87,7 @@ function Judge() {
   };
 
   const TLE = () => {
-    // return console.log("TLE L BOZO");
-    setColor("red");
-    return setVerdict("Time Limit Exceeeded!");
+    toast.error("Time limit Exceeded!");
   };
 
   const handleJudge = async () => {
@@ -101,8 +102,8 @@ function Judge() {
     let response = await axios.post("http://localhost:8800/judge", payload);
     if (response.data.response.trim() != sample_output_tests.trim()) {
       clearTimeout(timeout);
-      setColor("red");
-      return setVerdict("Wrong answer on sample test case");
+      toast.error("Wrong answer on sample test case");
+      
     } else {
       // if(hidden_input_tests.size()!=0)
       for (let i = 0; i < hidden_input_tests.length; i++) {
@@ -117,13 +118,11 @@ function Judge() {
         //if you reach here then the code has successfully ran without tle so remove "timout"
         if (response.data.response.trim() != hidden_output_tests[i].trim()) {
           clearTimeout(timeout);
-          setColor("red");
-          return setVerdict(`Wrong answer on hidden test case ${i + 1}`);
+          toast.error(`Wrong answer on hidden test case ${i + 1}`);
         }
       }
       clearTimeout(timeout);
-      setColor("green");
-      return setVerdict("Accepted!");
+      toast.success("Accepted!");
     }
   };
   const handleLanguage = (e) => {
@@ -137,70 +136,83 @@ function Judge() {
   };
 
   return (
-    <div className="all-details-compiler">
-     
-      <div className="title-1">
-        <div className="problem-details">
-          <h1 value={problem_name}>{problem_name}</h1>
-          <p>{problem_description}</p>
-        </div>
-      </div>
-      <div className="ci-boxes">
-        <MonacoEditor
-          value={code}
-          onChange={(e) => setCode(e)}
-          className="code-box"
-          height="400px"
-          width="622px"
-          options={{
-            fontSize: 20,
-          }}
-          theme="hc-light"
-          defaultLanguage="cpp"
+    <div>
+      <div>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          limit={1}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          transition:Bounce
         />
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="code-sinput-soutput"
-          placeholder="Write your input here"
-        ></textarea>
-        <textarea
-          //   value={sample_output_tests[0]}
-          value={sample_output_tests}
-          className="code-sinput-soutput"
-          placeholder="Sample output here"
-        ></textarea>
       </div>
+      <div className="all-details-compiler">
+        <div className="title-1">
+          <div className="problem-details">
+            <h1 value={problem_name}>{problem_name}</h1>
+            <p>{problem_description}</p>
+          </div>
+        </div>
+        <div className="ci-boxes">
+          <MonacoEditor
+            value={code}
+            onChange={(e) => setCode(e)}
+            className="code-box"
+            height="400px"
+            width="622px"
+            options={{
+              fontSize: 17,
+            }}
+            theme="hc-light"
+            defaultLanguage="cpp"
+          />
+          <textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="code-sinput-soutput"
+            placeholder="Write your input here"
+          ></textarea>
+          <textarea
+            //   value={sample_output_tests[0]}
+            value={sample_output_tests}
+            className="code-sinput-soutput"
+            placeholder="Sample output here"
+          ></textarea>
+        </div>
 
-      <p className="ci-headings">
-        <span>CODE</span>
-        <span>SAMPLE INPUT</span>
-        <span>SAMPLE OUTPUT</span>
-      </p>
-
-      <div>
-        <button onClick={handleRun} className="run-button">
-          Run
-        </button>
-        <select className="languages" onChange={(e) => handleLanguage(e)}>
-          <option value="cpp">C++</option>
-          <option value="java">Java</option>
-        </select>
-
-      </div>
-      <div>
-        <p className="title-2">OUTPUT</p>
-        <textarea
-          placeholder="Output here"
-          value={output}
-          className="output-text"
-        ></textarea>
-      </div>
-      <div className="verdict-stuff">
-        <button onClick={handleJudge}>SUBMIT</button>
-        <p value={verdict} style={{ color: color }}>
-          Verdict: {verdict}
+        <p className="ci-headings">
+          <span>CODE</span>
+          <span>SAMPLE INPUT</span>
+          <span>SAMPLE OUTPUT</span>
         </p>
+
+        <div>
+          <button onClick={handleRun} className="run-button-judge">
+            Run
+          </button>
+          <select className="languages" onChange={(e) => handleLanguage(e)}>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
+          </select>
+        </div>
+        <div>
+          <p className="title-2">OUTPUT</p>
+          <textarea
+            placeholder="Output here"
+            value={output}
+            className="output-text"
+          ></textarea>
+        </div>
+        <div className="verdict-stuff">
+          <button onClick={handleJudge}>SUBMIT</button>
+        </div>
       </div>
     </div>
   );

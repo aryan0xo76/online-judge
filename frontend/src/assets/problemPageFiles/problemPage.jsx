@@ -3,7 +3,9 @@ import ReactDOM from "react-dom/client";
 import "./problemPageStyles.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AiFillHome  } from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Problem() {
   const navigate = useNavigate();
@@ -11,8 +13,7 @@ function Problem() {
 
   useEffect(() => {
     axios
-      .get(
-        `${import.meta.env.VITE_BACKEND_URL}/problems`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/problems`)
       .then((response) => {
         setProblemList(response.data.response);
         // console.log(response.data.response);
@@ -23,28 +24,54 @@ function Problem() {
   const handleSolve = (index) => {
     navigate("/judge", { state: { index: { index } } });
   };
-  
-  const handleHome =() =>{
+
+  const handleHome = () => {
     navigate("/home");
   };
 
+  const handleAdminCheck = (e) => {
+    const isAdmin = localStorage.getItem("admin");
+    if (isAdmin == "true") {
+      navigate(`/${e.target.value}`);
+    } else {
+      toast.error("This feature is for Admins only!");
+    }
+  };
   return (
     <div className="all-details-problem">
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition:Bounce
+      />
       <div>
         <div className="nav-bar">
-          <AiFillHome className="home-button" onClick={handleHome}/>
-          <a href="/problems">
-            <button>Problem List</button>
-          </a>
-          <a href="/addproblem">
-            <button>Add a problem</button>
-          </a>
-          <a href="/updateproblem">
-            <button>Edit a problem</button>
-          </a>
-          <a href="/deleteproblem">
-            <button>Delete a problem</button>
-          </a>
+          <AiFillHome className="home-button" onClick={handleHome} />
+
+          <button value="problems" onClick={()=>{navigate("/problems");}}>
+            Problem List
+          </button>
+
+          <button value="addproblem" onClick={(e) => handleAdminCheck(e)}>
+            Add a problem
+          </button>
+
+          <button value="updateproblem" onClick={(e) => handleAdminCheck(e)}>
+            Edit a problem
+          </button>
+
+          <button value="deleteproblem" onClick={(e) => handleAdminCheck(e)}>
+            Delete a problem
+          </button>
         </div>
         <h1 className="title-problem">
           Problems List: &#40;Click on SOLVE to attempt the problem!&#41;
