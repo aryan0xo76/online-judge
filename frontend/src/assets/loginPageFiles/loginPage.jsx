@@ -24,7 +24,7 @@ function Login() {
             if (email == "admin") {
               localStorage.setItem("admin", true);
             }
-            navigate("/login");
+            navigate("/home");
           }, 1000);
         }
       })
