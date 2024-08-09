@@ -1,6 +1,6 @@
 ## Online Judge
 
-A MERN-stack based Online Judge with various working services like Authorization, an Online Compiler, CRUD Operations for a built-in problemset and obviously a working Online Judge capable of running a code and passing a verdict for the correctness of the said code.
+A MERN-stack based Online Judge with various working services like Authorization, Authentication, an Online Compiler, CRUD Operations for a built-in problemset and finally a working Online Judge capable of running a code in C++/Java and passing a verdict for the correctness of the said code.
 ## Demo Link
 [https://www.loom.com/share/b3d1f95b9b9b4014831211c108fab110?sid=7c7340bf-b3bc-4eb2-978d-0bfaf497784d](https://www.loom.com/share/b3d1f95b9b9b4014831211c108fab110?sid=d9101e52-acc6-401c-8d40-517c47e4f087)
 ## Requirements
@@ -40,10 +40,11 @@ npm run dev
       * jsonwebtoken
       * react-icons
       * @monaco-editor/react
+      * React-Toastify
 
 ## Acknowledgements
 * [Bhawesh Garg](https://github.com/bhavesh1129)
 * [Dev Garg](https://github.com/SATZEL02)
   
-## Contact me
+## Contact Details:
 * Email: aryan.singh4565@gmail.com

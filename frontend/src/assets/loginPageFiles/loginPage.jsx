@@ -60,7 +60,7 @@ function Login() {
           <p className="text">Email</p>
           <input
             className="input-box"
-            type="text"
+            type="email"
             placeholder="Your email here"
             onChange={(e) => setEmail(e.target.value)}
           ></input>
