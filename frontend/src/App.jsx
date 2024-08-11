@@ -9,7 +9,8 @@ import UpdateProblem from "./assets/updatePageFiles/updatePage.jsx";
 import DeleteProblem from "./assets/deletePageFiles/deletePage.jsx";
 import Judge from "./assets/judgePageFiles/judgePage.jsx";
 import About from "./assets/aboutPageFiles/aboutPage.jsx";
-import PrivateRoute from "./assets/private.jsx";
+import PrivateRouteLogin from "./assets/privateLogin.jsx";
+import PrivateRouteAdmin from "./assets/privateAdmin.jsx";
 // import Start from "./assets/startbad.jsx"
 // import EditProblems from "./assets/editPageFilesbad/editPage.jsx"
 
@@ -24,14 +25,15 @@ function App() {
       <Route path="/" element={<Login />}></Route>
       <Route path="/register" element={<Register />}></Route>
       <Route path="/login" element={<Login />}></Route>
-      <Route element={<PrivateRoute />}>
+      <Route element={<PrivateRouteLogin />}>
         <Route path="/home" element={<Home />} />
         <Route path="/compiler" element={<Compiler />}></Route>
         <Route path="/problems" element={<Problems />}></Route>
-        {/* <Route path='/editproblems' element = {<EditProblems/>}></Route> */}
-        <Route path="/addproblem" element={<AddProblem />}></Route>
-        <Route path="/updateproblem" element={<UpdateProblem />}></Route>
-        <Route path="/deleteproblem" element={<DeleteProblem />}></Route>
+        <Route element={<PrivateRouteAdmin />}>
+          <Route path="/addproblem" element={<AddProblem />}></Route>
+          <Route path="/updateproblem" element={<UpdateProblem />}></Route>
+          <Route path="/deleteproblem" element={<DeleteProblem />}></Route>
+        </Route>
         <Route path="/judge" element={<Judge />}></Route>
         <Route path="/about" element={<About />}></Route>
       </Route>
