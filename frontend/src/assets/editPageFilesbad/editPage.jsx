@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./editPageStyles.css";
 import { ToastContainer, toast } from "react-toastify";
+import { AiFillHome } from "react-icons/ai";
 import "react-toastify/dist/ReactToastify.css";
 
 function EditProblems() {
@@ -113,6 +114,8 @@ function EditProblems() {
       </div>
       <div className="all-details-add">
         <div className="nav-bar-add">
+          
+        <AiFillHome className="home-button" onClick={handleHome} />
           <a href="/problems">
             <button>Problem List</button>
           </a>

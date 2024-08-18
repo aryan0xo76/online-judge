@@ -35,6 +35,10 @@ function Judge() {
           System.out.print("hello NOT Leetcode in java!");
       }
   }`;
+  const defaultCodeJS = `
+  console.log("Hello Not Leetcode in JavaScript!");`;
+    const defaultCodePython = `
+  print("Hello Not Leetcode in Python!")`;
   const [language, setLanguage] = useState("cpp");
   const [code, setCode] = useState(defaultCodeCpp);
   const [input, setInput] = useState("");
@@ -77,7 +81,7 @@ function Judge() {
     // console.log(payload);
 
     try {
-      const response = await axios.post("http://localhost:8800/judge", payload);
+      const response = await axios.post("http://3.111.181.184:8800/judge", payload);
       // console.log(sample_output_tests.toString());
       console.log(response.data.response);
       setOutput(response.data.response);
@@ -99,7 +103,7 @@ function Judge() {
     };
     // console.log(payload);
 
-    let response = await axios.post("http://localhost:8800/judge", payload);
+    let response = await axios.post("http://3.111.181.184:8800/judge", payload);
     if (response.data.response.trim() != sample_output_tests.trim()) {
       clearTimeout(timeout);
       toast.error("Wrong answer on sample test case");
@@ -113,7 +117,7 @@ function Judge() {
           code,
           input,
         };
-        response = await axios.post("http://localhost:8800/judge", payload);
+        response = await axios.post("http://3.111.181.184:8800/judge", payload);
 
         //if you reach here then the code has successfully ran without tle so remove "timout"
         if (response.data.response.trim() != hidden_output_tests[i].trim()) {
@@ -132,6 +136,10 @@ function Judge() {
       setCode(defaultCodeCpp);
     } else if (e.target.value == "java") {
       setCode(defaultCodeJava);
+    }else if (e.target.value == "python") {
+      setCode(defaultCodePython);
+    }else if (e.target.value == "javascript") {
+      setCode(defaultCodeJS);
     }
   };
 
@@ -198,8 +206,11 @@ function Judge() {
             Run
           </button>
           <select className="languages" onChange={(e) => handleLanguage(e)}>
-            <option value="cpp">C++</option>
-            <option value="java">Java</option>
+          
+          <option value="cpp">C++</option>
+          <option value="java">Java</option>
+          <option value="python">Python</option>
+          <option value="javaScript">JavaScript</option>
           </select>
         </div>
         <div>

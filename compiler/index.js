@@ -5,6 +5,8 @@ const cors = require("cors");
 const { generateFilePath } = require("./compilerFiles/generateFilePath.js");
 const { executeCpp } = require("./compilerFiles/executeCpp.js");
 const { executeJava } = require("./compilerFiles/executeJava.js");
+const { executeJS } = require("./compilerFiles/executeJS.js");
+const { executePython } = require("./compilerFiles/executePython.js");
 const { generateInputPath } = require("./compilerFiles/generateInputPath.js");
 
 //middldewares
@@ -32,6 +34,10 @@ app.post("/", async (req, res) => {
       output = await executeCpp(filepath, inputpath);
     } else if (language == "java") {
       output = await executeJava(filepath, inputpath);
+    } else if (language == "javascript") {
+      output = await executeJS(filepath, inputpath);
+    } else if (language == "python") {
+      output = await executePython(filepath, inputpath);
     }
     // console.log(output.object);
     res.json({ output });
@@ -56,6 +62,10 @@ app.post("/judge", async (req, res) => {
       output = await executeCpp(filepath, inputpath);
     } else if (language == "java") {
       output = await executeJava(filepath, inputpath);
+    } else if (language == "javascript") {
+      output = await executeJS(filepath, inputpath);
+    } else if (language == "python") {
+      output = await executePython(filepath, inputpath);
     }
     res.json({ response: output });
   } catch (err) {

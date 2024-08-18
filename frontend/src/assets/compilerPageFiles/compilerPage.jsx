@@ -20,6 +20,10 @@ class HelloWorld {
         System.out.print("hello NOT Leetcode in java!");
     }
 }`;
+const defaultCodeJS = `
+console.log("Hello Not Leetcode in JavaScript!");`;
+  const defaultCodePython = `
+print("Hello Not Leetcode in Python!")`;
   const [language, setLanguage] = useState("cpp");
   const [code, setCode] = useState(defaultCodeCpp);
   const [input, setInput] = useState("");
@@ -31,6 +35,10 @@ class HelloWorld {
       setCode(defaultCodeCpp);
     } else if (e.target.value == "java") {
       setCode(defaultCodeJava);
+    }else if (e.target.value == "python") {
+      setCode(defaultCodePython);
+    }else if (e.target.value == "javascript") {
+      setCode(defaultCodeJS);
     }
   };
   const handleRun = async () => {
@@ -45,7 +53,7 @@ class HelloWorld {
     };
 
     try {
-      const data = await axios.post("http://localhost:8800", payload);
+      const data = await axios.post("http://3.111.181.184:8800", payload);
       console.log(data);
       setOutput(data.data.output);
     } catch (error) {
@@ -58,6 +66,8 @@ class HelloWorld {
         <select onChange={(e) => handleLanguage(e)}>
           <option value="cpp">C++</option>
           <option value="java">Java</option>
+          <option value="python">Python</option>
+          <option value="javascript">JavaScript</option>
         </select>
       </div>
       <div className="title-1">
