@@ -1,8 +1,8 @@
 ## Online Judge
 
-A MERN-stack based Online Judge with various working services like Authorization, Authentication, an Online Compiler, CRUD Operations for a built-in problemset and finally a working Online Judge capable of running a code in C++/Java and passing a verdict for the correctness of the said code.
+A MERN-stack based Online Judge with various working services like Authorization, Authentication, an Online Compiler completely deployed on AWS, CRUD Operations for a built-in problemset and finally a working Online Judge capable of running a code in C++/Java and passing a verdict for the correctness of the said code.
 ## Demo Link
-[https://www.loom.com/share/b3d1f95b9b9b4014831211c108fab110?sid=7c7340bf-b3bc-4eb2-978d-0bfaf497784d](https://www.loom.com/share/b3d1f95b9b9b4014831211c108fab110?sid=d9101e52-acc6-401c-8d40-517c47e4f087)
+[https://www.loom.com/share/cbf5f673ce3147d9acff5a5b68439ce3?sid=bfe402c6-50d0-4f64-8b07-c320713ff007](https://www.loom.com/share/cbf5f673ce3147d9acff5a5b68439ce3?sid=bfe402c6-50d0-4f64-8b07-c320713ff007)
 ## Requirements
 
 * NodeJS (version 20.14.0)
