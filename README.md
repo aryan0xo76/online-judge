@@ -1,6 +1,6 @@
 ## Online Judge
 
-A MERN-stack based Online Judge with various working services like Authorization, Authentication, an Online Compiler completely deployed on AWS, CRUD Operations for a built-in problemset and finally a working Online Judge capable of running a code in C++/Java and passing a verdict for the correctness of the said code.
+A MERN-stack based Online Judge with various working services like Authorization, Authentication, an Online Compiler completely deployed on AWS, CRUD Operations for a built-in problemset and finally a working Online Judge capable of running a code in C++, Java, JavaSript and Python and passing a verdict for the correctness of the said code.
 ## Demo Link
 [https://www.loom.com/share/cbf5f673ce3147d9acff5a5b68439ce3?sid=bfe402c6-50d0-4f64-8b07-c320713ff007](https://www.loom.com/share/cbf5f673ce3147d9acff5a5b68439ce3?sid=bfe402c6-50d0-4f64-8b07-c320713ff007)
 ## Requirements
