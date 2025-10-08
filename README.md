@@ -1,8 +1,5 @@
----
 
 **Disclaimer:** The AWS backend has been **shut down** so the online features are **currently unavailable**.
-
----
 
 
 ## Online Judge
