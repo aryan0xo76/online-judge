@@ -1,5 +1,5 @@
 
-> ⚠️ **Disclaimer:** The AWS backend has been **shut down** so the online features are **currently unavailable**.
+> ⚠️ **Disclaimer:** The AWS backend has been **shut down** so the online features are **currently unavailable**. Please refer to the demo video link below. 
 
 
 ## Online Judge
