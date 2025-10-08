@@ -1,3 +1,10 @@
+---
+
+**Disclaimer:** The AWS backend has been **shut down** so the online features are **currently unavailable**.
+
+---
+
+
 ## Online Judge
 
 A MERN-stack based Online Judge with various working services like Authorization, Authentication, an Online Compiler completely deployed on AWS, CRUD Operations for a built-in problemset and finally a working Online Judge capable of running a code in C++, Java, JavaSript and Python and passing a verdict for the correctness of the said code.
